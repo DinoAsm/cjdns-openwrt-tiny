@@ -1,0 +1,15 @@
+#!/bin/sh /etc/rc.common
+
+START=90
+STOP=85
+
+start() {
+	if [ -f /etc/cjdroute.conf -a -f /usr/sbin/cjdroute ] 
+		then /usr/sbin/cjdroute < /etc/cjdroute.conf &> /dev/null
+	fi
+}
+
+stop() {
+	killall cjdroute
+}
+
