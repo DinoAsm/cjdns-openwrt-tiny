@@ -1,0 +1,1 @@
+It is a package building script for OpenWrt Buildroot, based on https://github.com/seattlemeshnet/meshbox . Yes, here is nothing except from Makefile for cjdns and init script, because it's "tiny".
