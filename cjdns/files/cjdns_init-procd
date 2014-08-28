@@ -1,0 +1,15 @@
+#!/bin/sh /etc/rc.common
+
+USE_PROCD=1
+
+start_service() {
+if [ -f /etc/cjdroute.conf -a -f /usr/sbin/cjdroute ]
+then
+	procd_open_instance cjdns
+	procd_set_param command /usr/sbin/cjdroute < /etc/cjdroute.conf &> /dev/null
+	procd_set_param file /etc/cjdroute.conf
+	procd_set_param respawn
+	procd_close_instance
+fi
+}
+

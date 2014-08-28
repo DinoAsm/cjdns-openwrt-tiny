@@ -32,6 +32,14 @@ define Package/cjdns
   MAINTAINER:=cjd -- #cjdns on irc.efnet.org
 endef
 
+define Package/cjdns/config
+	config CJDNS_INIT_PROCD
+	bool "Build with procd init script"
+	help
+		Cjdns doesn`t start at reboot with installed procd and oldstyle init script.
+	default n
+endef
+
 define Build/Configure
 endef
 
@@ -51,7 +59,11 @@ define Package/cjdns/install
 	$(INSTALL_DIR) $(1)/usr/sbin
 	$(INSTALL_BIN) $(PKG_BUILD_DIR)/cjdroute   $(1)/usr/sbin/cjdroute
 	$(INSTALL_DIR) $(1)/etc/init.d
-	$(INSTALL_BIN) ./files/etc/init.d/cjdns 	$(1)/etc/init.d/cjdns
+	ifeq ($(CONFIG_CJDNS_INIT_PROCD),y)
+		$(INSTALL_BIN) ./files/cjdns_init-procd 	$(1)/etc/init.d/cjdns
+	else
+		$(INSTALL_BIN) ./files/cjdns_init-oldstyle 	$(1)/etc/init.d/cjdns		
+	endif
 endef
 
 $(eval $(call BuildPackage,cjdns))
