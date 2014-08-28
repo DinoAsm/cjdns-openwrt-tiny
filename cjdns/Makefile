@@ -58,7 +58,11 @@ define Build/Compile
 endef
 
 define Package/cjdns/install
-	./install.sh
+	INSTALL_DIR="$(INSTALL_DIR)" \
+	INSTALL_BIN="$(INSTALL_BIN)" \
+	PKG_BUILD_DIR="$(PKG_BUILD_DIR)" \
+	CONFIG_CJDNS_INIT_PROCD="$(CONFIG_CJDNS_INIT_PROCD)" \
+	./install.sh $(1)
 endef
 
 $(eval $(call BuildPackage,cjdns))
